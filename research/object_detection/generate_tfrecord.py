@@ -17,7 +17,7 @@ import pandas as pd
 import tensorflow as tf
 
 from PIL import Image
-from utils import dataset_util
+from object_detection.utils import dataset_util
 from collections import namedtuple, OrderedDict
 
 flags = tf.app.flags
@@ -95,9 +95,7 @@ def create_tf_example(group, path):
 def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
     path = os.path.join(os.getcwd(), FLAGS.image_dir)
-    print(FLAGS.csv_input)
     examples = pd.read_csv(FLAGS.csv_input)
-    
     grouped = split(examples, 'filename')
     for group in grouped:
         tf_example = create_tf_example(group, path)
